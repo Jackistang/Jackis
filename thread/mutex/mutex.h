@@ -37,27 +37,27 @@ public:
         // : holder_(0)
     {
         pthread_mutexattr_t attr;
-        pthread_mutexattr_init(&attr);
-        pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_NORMAL);
+        MCHECK(pthread_mutexattr_init(&attr));
+        MCHECK(pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_NORMAL));
 
-        pthread_mutex_init(&mutex_, &attr);    
+        MCHECK(pthread_mutex_init(&mutex_, &attr));    
     }
 
     ~mutex_lock() 
     {
         // assert(holder_ == 0);
-        pthread_mutex_destroy(&mutex_);
+        MCHECK(pthread_mutex_destroy(&mutex_));
     }
 
     void lock()             // Only used for mutex_lock_guard. Forbid user code use it.
     {
-        pthread_mutex_lock(&mutex_);
+        MCHECK(pthread_mutex_lock(&mutex_));
         // holder_ = current_thread::tid();
     }
     void unlock()           // Only used for mutex_lock_guard. Forbid user code use it.
     {
         // holder_ = 0;
-        pthread_mutex_unlock(&mutex_);
+        MCHECK(pthread_mutex_unlock(&mutex_));
     }
 
     /* bool islocked_by_this_thread()
