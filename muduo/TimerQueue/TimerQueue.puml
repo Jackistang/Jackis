@@ -1,0 +1,95 @@
+@startuml
+
+class Timer {
+  - callback_   : const TimerCallback
+  - expiration_ : Timestamp 
+  - interval_   : const double 
+  - repeat_     : const bool 
+
+  + Timer(const TimerCallback& cb, Timestamp when, double interval)
+  + run() const : void
+  + expiration() const : Timestamp
+  + repeat() const : bool
+  + restart(Timestamp now) : void
+}
+
+class TimerId {
+  - value_ : Timer *
+
+  + TimerId(Timer *timer)
+}
+
+class TimerQueue {
+  - typedef std::pair<Timestamp, Timer*> Entry
+  - typedef std::set<Entry> TimerList
+
+  - loop_           : EventLoop *
+  - timerfd_        : const int 
+  - timerfdChannel_ : Channel 
+  - timers_         : TimerList 
+
+
+  + TimerQueue()
+  + ~TimerQueue()
+  + addTimer(const TimerCallback &cb, Timestamp when, double interval) : TimerId
+  + cancel(TimerId timerId) : void
+  - getExpired(Timestamp now) : std::vector<Entry>
+  - handleRead() : void
+  - reset(const std::vector<Entry>& expired, Timestamp now) : void
+  - insert(Timer* timer) : bool
+}
+
+@enduml
+
+@startuml
+
+class Timer {
+  - callback_   : const TimerCallback
+  - expiration_ : Timestamp 
+  - interval_   : const double 
+  - repeat_     : const bool 
+
+  + Timer(const TimerCallback& cb, Timestamp when, double interval)
+  + run() const : void
+  + expiration() const : Timestamp
+  + repeat() const : bool
+  + restart(Timestamp now) : void
+}
+
+@enduml
+
+@startuml
+
+
+class TimerId {
+  - value_ : Timer *
+
+  + TimerId(Timer *timer)
+}
+
+
+@enduml
+
+@startuml
+
+class TimerQueue {
+  - typedef std::pair<Timestamp, Timer*> Entry
+  - typedef std::set<Entry> TimerList
+
+  - loop_           : EventLoop *
+  - timerfd_        : const int 
+  - timerfdChannel_ : Channel 
+  - timers_         : TimerList 
+
+
+  + TimerQueue()
+  + ~TimerQueue()
+  + addTimer(const TimerCallback &cb, Timestamp when, double interval) : TimerId
+  + cancel(TimerId timerId) : void
+  - getExpired(Timestamp now) : std::vector<Entry>
+  - handleRead() : void
+  - reset(const std::vector<Entry>& expired, Timestamp now) : void
+  - insert(Timer* timer) : bool
+}
+
+@enduml
