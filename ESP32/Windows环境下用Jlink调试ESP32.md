@@ -14,13 +14,9 @@
 | GPIO 13 (TCK) | Pin 9 (TCK)    |
 | GPIO 15 (TDO) | Pin 13 (TDO)   |
 
-ESP32-Devkit 引脚图如下图所示，天线部分朝上：
+引脚图如下：
 
-![](https://i.loli.net/2021/03/01/GUIaXqOl4d5PVpR.png)
-
-我使用的 Jlink v9 JTAG 接口如下：
-
-![](https://i.loli.net/2021/03/01/3bTDLI7alOk9pUf.png)
+![](https://i.loli.net/2021/03/01/oHXTL6vx8qpRd1O.jpg)
 
 Jlink 与 ESP32 连接好后，我们就可以开始调试了。
 
