@@ -16,7 +16,7 @@
 
 下述操作手机需要有 root 权限，蓝绿厂手机就不用考虑了，推荐小米。
 
-先在电脑上安装 `platform-tools` 工具链 ，里面有Android Debug Bridge（adb）工具，下载[工具链]()，解压到某个文件夹，并且将该工具的目录路径添加到 PATH 环境变量。
+先在电脑上安装 `platform-tools` 工具链 ，里面有Android Debug Bridge（adb）工具，下载[工具链](https://github.com/Jackistang/Jackis/blob/main/BLE/platform-tools_r31.0.0-windows.zip)，解压到某个文件夹，并且将该工具的目录路径添加到 PATH 环境变量。
 
 手机通过 USB 连接电脑，并且开启**“USB调试模式”**，PC 端打开 cmd，输入 `adb devices` 就能够看到手机设备了。
 
@@ -26,7 +26,7 @@ List of devices attached
 f8761e1 device
 ```
 
-下一步需要在手机端安装 `adbd-insecure.apk` 文件，先下载该[文件]()，在文件路径下输入 `adb install adbd-insecure.apk` 安装，手机端同意即可。
+下一步需要在手机端安装 `adbd-insecure.apk` 文件，先下载该[文件](https://github.com/Jackistang/Jackis/blob/main/BLE/adbd-Insecure-v2.00.apk)，在文件路径下输入 `adb install adbd-insecure.apk` 安装，手机端同意即可。
 
 ```shell
 C:\Users\M2019\Desktop>ls
