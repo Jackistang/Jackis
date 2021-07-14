@@ -57,3 +57,61 @@ static 就是代码里用 `static` 修饰的对象，automatic 就是函数内�
 
 - [Thread-local storage - WIKIPEDIA](https://en.wikipedia.org/wiki/Thread-local_storage#Windows_implementation)
 - [Thread-Local Storage - GCC Documents](https://gcc.gnu.org/onlinedocs/gcc/Thread-Local.html)
+
+## DCL31-C. Declare identifiers before using them
+
+使用标识符前必须**显式声明**他们。
+
+这条规则的核心是使用变量、函数时必须显式地声明他们。C90 标准允许变量和函数的**隐式声明**，但这在新的 C11 标准中被废弃了，并且新代码也不推荐使用隐式声明，以下有一些例子：
+
+**Noncompliant Code Example (Implicit int)**
+
+变量声明时如果缺乏类型定义，编译器会尝试隐式声明为 int 类型，例如下述的 `foo` 。
+
+```C
+extern foo;
+```
+
+但 `foo` 可能是其他类型的变量，最终导致错误。
+
+**Noncompliant Code Example (Implicit Function Declaration)**
+
+当调用一个函数，而该函数并未声明，则 C90 标准会**隐式声明**一个标识符 `extern int identifier();`，其函数可以接收任意个数任意类型的参数，且返回值为 int 类型。例如下述例子：
+
+```C
+#include <stddef.h>
+/* #include <stdlib.h> is missing */
+  
+int main(void) {
+  for (size_t i = 0; i < 100; ++i) {
+    /* int malloc() assumed */
+    char *ptr = (char *)malloc(0x10000000);
+    *ptr = 'a';
+  }
+  return 0;
+}
+```
+
+`malloc()` 函数的头文件 stdlib.h 并未 include，因此 C90 编译器隐式声明了 `int malloc()`，如果系统的 int 是 32bit，而指针是 64bit，这就会导致 malloc 返回的 64bit 数据被截断为  32bit，最终导致错误。
+
+**Noncompliant Code Example (Implicit Return Type)**
+
+当一个函数并未显式声明其返回值类型时，如果函数返回一个整数，C90 编译器隐式声明其返回值为 int 类型。下述例子中 `foo()` 函数的返回值类型被隐式声明为 int 类型，其返回的 `UINT_MAX` 被错误的转换成了 -1 。
+
+```C
+#include <limits.h>
+#include <stdio.h>
+  
+foo(void) {
+  return UINT_MAX;
+}
+ 
+int main(void) {
+  long long int c = foo();
+  printf("%lld\n", c);
+  return 0;
+}
+```
+
+
+
