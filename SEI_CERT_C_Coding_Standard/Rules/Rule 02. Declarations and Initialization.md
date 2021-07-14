@@ -113,5 +113,40 @@ int main(void) {
 }
 ```
 
+## DCL36-C. Do not declare an identifier with conflicting linkage classifications
 
+不要声明会导致**链接冲突**的标识符。
+
+标识符的链接属性可分为三类：
+
+- 外部链接（**External linkage**）：该标识符在整个程序中（所有编译单元和库）代表**同一**对象或函数。用 **extern 声明的标识符**或**具有文件作用域范围且未用 static 修饰的标识符**都具有外部链接属性。
+- 内部链接（**Internal linkage**）：该标识符在一个翻译单元（单个文件）内代表**同一**对象或函数。用 static 修饰的标识符具有内部链接属性。
+- 无链接（**No linkage**）：可以在文件的其他地方声明名称相同的标识符。
+
+多次声明具有不同连接属性的标识符，有时会有未定义的行为，应尽可能避免。
+
+下图中显示了同时声明两个不同链接属性的标识符的最终结果，列为第一次声明，行为第二次声明。
+
+![](https://i.loli.net/2021/07/15/aXlIjfE4hoOMSUi.png)
+
+一个简单例子如下，`i2` 和 `i5` 都会产生未定义的行为。 
+
+```C
+int i1 = 10;         /* Definition, external linkage */
+static int i2 = 20;  /* Definition, internal linkage */
+extern int i3 = 30;  /* Definition, external linkage */
+int i4;              /* Tentative definition, external linkage */
+static int i5;       /* Tentative definition, internal linkage */
+ 
+int i1;  /* Valid tentative definition */
+int i2;  /* Undefined, linkage disagreement with previous */
+int i3;  /* Valid tentative definition */
+int i4;  /* Valid tentative definition */
+int i5;  /* Undefined, linkage disagreement with previous */
+ 
+int main(void) {
+  /* ... */
+  return 0;
+}
+```
 
