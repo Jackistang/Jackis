@@ -4,7 +4,7 @@
 
 ## JLink 环境搭建
 
-JLink 环境搭建比较简单，从 SEGGER 官网下载 [J-Link Software and Documentation Pack](https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack)，并安装即可，网上有很多教程，我就不在赘述了。
+JLink 环境搭建比较简单，从 SEGGER 官网下载 [J-Link Software and Documentation Pack](https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack)，并安装即可，网上有很多教程，我就不再赘述了。
 
 ## JLink 命令行下载固件
 
@@ -14,15 +14,15 @@ JLink 工具里有下载功能的是 JLinkExe，Windows 系统里的名称是 JL
 
 首先进入 "bsp/nrf5x/nrf52840" 目录，输入 `JLinkExe` 命令，进入了交互式环境，
 
-![](images/image-20210716191111514.png)
+![](https://i.loli.net/2021/07/16/6B2ptAwTnLqrh8Y.png)
 
 然后再输入 `device NRF52840_XXAA` 设置设备名称；输入 `if SWD` 选择 SWD 接口，if 是 interface 的意思；最后输入 `speed 4000` 设置 SWD 接口的速度为 4000 kHz 。
 
-![](images/image-20210716191053926.png)
+![](https://i.loli.net/2021/07/16/fVOog8wsIEP9uNv.png)
 
 再输入 `connect` 连接设备，
 
-![](images/image-20210716191212079.png)
+![](https://i.loli.net/2021/07/16/HDL21xZrj3ehYNJ.png)
 
 这个时候就已经可以下载固件了，使用命令
 
@@ -95,13 +95,13 @@ q
 
 `si 1` 是用来设置 SWD 接口，
 
-![](images/image-20210716193754815.png) 
+![](https://i.loli.net/2021/07/16/aGJTmwbxpZQVEHo.png) 
 
 `speed 15000` 是用来设置接口速度，
 
 `r` 用来复位设备，
 
-![](images/image-20210716193952382.png)
+![](https://i.loli.net/2021/07/16/pYjhBmZLDQn5t9P.png)
 
 `h` 用于中断设备，
 
@@ -118,5 +118,5 @@ q
 VSCode 插件 RT-Thread Studio 的 BUG 记录：
 
 1. "JLink.exe" 的名称问题，Linux 系统上名称为 "JLinkExe" 。
-2. 固件下载地址的问题，使用插件的**下载**功能时，会自动在 bsp 目录下生成 `.rtthread_jlink_download` 文件，并且其下载地址固定为 0x08000000，更改后也没有，因此下次下载时这个文件又会变成默认的配置。这里需要改进一下。
+2. 固件下载地址的问题，使用插件的**下载**功能时，会自动在 bsp 目录下生成 `.rtthread_jlink_download` 文件，并且其下载地址固定为 0x08000000，更改后也没有用，因为下次下载时这个文件又会变成默认的配置。这里需要改进一下。
 
