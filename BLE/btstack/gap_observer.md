@@ -124,6 +124,16 @@ void le_handle_advertisement_report(uint8_t *packet, uint16_t size){
 
 btstack 提供了一种迭代器机制，通过 `ad_iterator_init()` 初始化迭代器，`ad_iterator_has_more()` 判断迭代器是否还有内容，`ad_iterator_next()` 获取下一个迭代器，这三个函数用于 for 循环，就可以遍历整个数据流了。然后针对每个迭代器，可以用 `ad_iterator_get_data_type()` 获取广播数据类型，`ad_iterator_get_data_len()` 函数获取广播数据长度，`ad_iterator_get_data()` 获取广播数据。
 
+## 宏配置
+
+```C
+#define ENABLE_BLE	1
+#define ENABLE_LE_CENTRAL	1
+```
+
+
+
 ---
 
 至此，btstack 提供的 GAP Observation 操作基本就介绍完毕了，还是比较清晰的。
+
